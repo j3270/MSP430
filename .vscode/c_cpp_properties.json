@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "MSP430-TI C/C++ Configuration",
+            "includePath": [
+                "${env:MSP430_CCS_INSTALL}/lib",
+                "${env:MSP430_CCS_INSTALL}/include",
+                "${env:MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib",
+                "${env:MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx",
+                "${env:MSP430_CCS_INSTALL}/../../../ccs_base/msp430/include"
+            ],
+            "compilerPath": "${env:MSP430_CCS_INSTALL}/bin/cl430.exe",
+            "cStandard": "c99",
+            "cppStandard": "c++14",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        },
+        {
+            "name": "MSP430-GCC C/C++ Configuration",
+            "includePath": [
+                "${env:MSP430_GCC_INSTALL}/lib",
+                "${env:MSP430_GCC_INSTALL}/include"
+            ],
+            "cStandard": "c99",
+            "cppStandard": "c++14",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

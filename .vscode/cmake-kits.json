@@ -1,0 +1,16 @@
+[
+  {
+    "name": "MSP430-TI ToolChain",
+    "toolchainFile": "${workspaceFolder}/tools/cmake/msp430-cl430.cmake",
+    "preferredGenerator": {
+        "name": "Ninja"
+    }
+  },
+    {
+      "name": "MSP430-GCC ToolChain",
+      "toolchainFile": "${workspaceFolder}/tools/cmake/msp430-gcc.cmake",
+      "preferredGenerator": {
+          "name": "Ninja"
+      }
+    }
+]

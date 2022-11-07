@@ -1,0 +1,86 @@
+
+cmake_minimum_required(VERSION 3.25.0)
+project(SaverAM VERSION 0.1.0)
+
+include(CTest)
+enable_testing()
+
+enable_language(C ASM)
+
+set(ASM_FILES  
+)
+
+set(SRC_FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+)
+
+set(INC_DIRS 
+        $ENV{MSP430_CCS_INSTALL}/lib
+        $ENV{MSP430_CCS_INSTALL}/include
+        $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib
+        $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx
+        $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/include
+)
+
+set(DEFINES 
+         __MSP430F5529__
+        DEBUG=1
+)
+
+set(EXECUTABLE blink.elf)
+
+add_executable(${EXECUTABLE} ${SRC_FILES} ${ASM_FILES})
+
+target_include_directories(${EXECUTABLE} PRIVATE ${INC_DIRS})
+
+target_compile_definitions(${EXECUTABLE} PRIVATE ${DEFINES})
+
+target_compile_options(${EXECUTABLE} PRIVATE 
+        -vmspx 
+        --code_model=large 
+        --data_model=restricted 
+        --near_data=globals 
+        -Ooff 
+        --use_hw_mpy=F5 
+        --advice:power=all  
+        -g 
+        --c99 
+        --diag_warning=225 
+        --diag_wrap=off 
+        --display_error_number 
+        --abi=eabi 
+        --silicon_errata=CPU21 
+        --silicon_errata=CPU22 
+        --silicon_errata=CPU40 
+        --small_enum
+        --gen_cross_reference_listing 
+        --gen_func_info_listing 
+        --gen_preprocessor_listing 
+        --section_sizes=on
+)
+
+target_link_options(${EXECUTABLE} PRIVATE   
+        --heap_size=160 
+        --stack_size=224 
+        --cinit_hold_wdt=on 
+        -i$ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/include
+        --reread_libs 
+        --diag_wrap=off
+        --display_error_number
+        --warn_sections 
+        --xml_link_info=${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE}.xml
+        --use_hw_mpy=F5 
+        --rom_model
+)
+
+target_link_libraries(${EXECUTABLE} 
+        ${CMAKE_CURRENT_SOURCE_DIR}/lnk_msp430f5529.cmd
+        --library $ENV{MSP430_CCS_INSTALL}/lib/libc.a
+        --library $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx/libmath.a
+)
+
+# Optional: Create hexfile
+add_custom_command(TARGET ${EXECUTABLE}
+        POST_BUILD
+        COMMAND ${CG_TOOL_HEX} --memwidth=8 --romwidth=8 --diag_wrap=off --intel -o "blink.hex"  ${EXECUTABLE} 
+)

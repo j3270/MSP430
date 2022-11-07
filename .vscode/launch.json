@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug blink",
+            "program": "${workspaceFolder}/build/projects/blink/blink.elf",
+            "type":"cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/",
+            "miDebuggerPath": "${env:MSP430_GCC_INSTALL}/bin/msp430-elf-gdb.exe",
+            "MIMode": "gdb",
+            "miDebuggerServerAddress": "localhost:55000",
+            "debugServerPath": "${env:MSP430_GCC_INSTALL}/bin/gdb_agent_console.exe",
+            "debugServerArgs": "${workspaceFolder}/tools/msp430.dat",
+            "stopAtEntry": true,
+            //"logging": {
+            //    "engineLogging": true
+            //}, 
+        }
+    ]
+}
