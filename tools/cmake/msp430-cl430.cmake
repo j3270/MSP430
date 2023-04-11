@@ -1,5 +1,5 @@
 
-# MSP430_CCS_INSTALL should point to C:\ti\ccs1210\ccs\tools\compiler\ti-cgt-msp430_21.6.1.LTS, or something simillar depending on install location and version
+# MSP430_CCS_INSTALL should point to C:\ti\ccs1210\ccs, or something simillar depending on install location and version
 
 if (NOT DEFINED ENV{MSP430_CCS_INSTALL})
 	message(FATAL_ERROR "MSP430_CCS_INSTALL environment variable is not defined!")
@@ -7,6 +7,7 @@ else()
 	message(STATUS "MSP430_CCS_INSTALL equals: $ENV{MSP430_CCS_INSTALL}")
 endif()
 
+# Set version being used here.  Multiple versions of the toolchain can be installed at same time
 set(MSP430_TOOLCHAIN_ROOT "$ENV{MSP430_CCS_INSTALL}/tools/compiler/ti-cgt-msp430_21.6.1.LTS")
 
 #cl430 is the cmd line tool that invokes either the asm, c/c++ compiler, or linker depending on flags
