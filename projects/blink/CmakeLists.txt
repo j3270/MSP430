@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.25.0)
-project(SaverAM VERSION 0.1.0)
+project(blink VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
@@ -15,11 +15,11 @@ set(SRC_FILES
 )
 
 set(INC_DIRS 
-        $ENV{MSP430_CCS_INSTALL}/lib
-        $ENV{MSP430_CCS_INSTALL}/include
-        $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib
-        $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx
-        $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/include
+        ${MSP430_TOOLCHAIN_ROOT}/lib
+        ${MSP430_TOOLCHAIN_ROOT}/include
+        ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/lib
+        ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx
+        ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/include
 )
 
 set(DEFINES 
@@ -63,7 +63,7 @@ target_link_options(${EXECUTABLE} PRIVATE
         --heap_size=160 
         --stack_size=224 
         --cinit_hold_wdt=on 
-        -i$ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/include
+        -i${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/include
         --reread_libs 
         --diag_wrap=off
         --display_error_number
@@ -75,8 +75,8 @@ target_link_options(${EXECUTABLE} PRIVATE
 
 target_link_libraries(${EXECUTABLE} 
         ${CMAKE_CURRENT_SOURCE_DIR}/lnk_msp430f5529.cmd
-        --library $ENV{MSP430_CCS_INSTALL}/lib/libc.a
-        --library $ENV{MSP430_CCS_INSTALL}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx/libmath.a
+        --library ${MSP430_TOOLCHAIN_ROOT}/lib/rts430x_lc_rd_eabi.lib
+        --library ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx/MSPMATHLIB_CCS_msp430_5xx_6xx_FRxx_large_code_restricted_data.lib
 )
 
 # Optional: Create hexfile

@@ -1,0 +1,7 @@
+
+After connecting gdb commands-
+    1. -exec load   //Loads elf file into memory
+    2. -exec break main     //Set break point at main
+    3. -exec continue       //Run to main
+
+Once you do that step and play work. Step over and step out do not.  Step over still steps in and step out appears to just run.
