@@ -15,15 +15,12 @@ set(SRC_FILES
 )
 
 set(INC_DIRS 
-        ${MSP430_TOOLCHAIN_ROOT}/lib
-        ${MSP430_TOOLCHAIN_ROOT}/include
-        ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/lib
-        ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx
-        ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/include
+        ${MSP430_TOOLCHAIN_ROOT}/../include
+        ${MSP430_TOOLCHAIN_ROOT}/../../../../ccs_base/msp430/include
 )
 
 set(DEFINES 
-         __MSP430F5529__
+         __MSP430G2553__
         DEBUG=1
 )
 
@@ -63,7 +60,7 @@ target_link_options(${EXECUTABLE} PRIVATE
         --heap_size=160 
         --stack_size=224 
         --cinit_hold_wdt=on 
-        -i${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/include
+        -i${MSP430_TOOLCHAIN_ROOT}/../../ccs_base/msp430/include
         --reread_libs 
         --diag_wrap=off
         --display_error_number
@@ -75,7 +72,7 @@ target_link_options(${EXECUTABLE} PRIVATE
 
 target_link_libraries(${EXECUTABLE} 
         ${CMAKE_CURRENT_SOURCE_DIR}/lnk_msp430f5529.cmd
-        --library ${MSP430_TOOLCHAIN_ROOT}/lib/rts430x_lc_rd_eabi.lib
+        --library ${MSP430_TOOLCHAIN_ROOT}/bin/lib/rts430x_lc_rd_eabi.lib
         --library ${MSP430_TOOLCHAIN_ROOT}/../../../ccs_base/msp430/lib/5xx_6xx_FRxx/MSPMATHLIB_CCS_msp430_5xx_6xx_FRxx_large_code_restricted_data.lib
 )
 
