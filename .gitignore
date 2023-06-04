@@ -44,3 +44,14 @@
 
 # cmake build
 build
+
+# ignores for code composer studio
+projects/*/Debug
+projects/*/Release
+projects/*/.xdchelp
+projects/*/.launches
+projects/*/.config
+projects/*/targetConfigs
+
+# Exclude ignoring Astyle 
+!tools/AStyle/bin/AStyle.exe
