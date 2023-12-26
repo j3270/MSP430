@@ -2,17 +2,24 @@
 #include <msp430.h>
 #include <stdbool.h>
 
-#define START_OF_RAM ((unsigned int *) 0x200)
-extern unsigned int * const _stack;
-
 unsigned int var1 = 0xDEAD;
 unsigned int var2 = 0xBEEF;
 unsigned int temp = 0;
 
+#if defined(__LARGE_DATA_MODEL__)
+extern long _stack;
+#define DATA_PTR_TYPE long
+#else
+extern int _stack;
+#define DATA_PTR_TYPE int
+#endif
+
+#define START_OF_RAM (DATA_PTR_TYPE) (0x2400)
+
 int _system_pre_init(void)
 {
     // This object is allocated on the stack
-    unsigned int * working_ptr = START_OF_RAM;
+    long working_ptr = START_OF_RAM;
 
     /* From the TI C/C++ compiler manual.
      * _system_pre_init(): This function provides a place to perform application-specific initialization. It is invoked
@@ -22,20 +29,21 @@ int _system_pre_init(void)
     */
 
     // Zero RAM before C/C++ enviroment setup
-    while(working_ptr < _stack)
+
+    while(((DATA_PTR_TYPE *) working_ptr) < &_stack)
     {
-        *working_ptr = 0;
-        working_ptr++;
+        *((DATA_PTR_TYPE *) working_ptr) = 0;
+        working_ptr += 2;
     }
 
     //Initialize memory allocated for the stack with a known value to inspect stack consumption
-    working_ptr = (unsigned int *) __get_SP_register();
+    working_ptr = __get_SP_register();
     // Write 0xAA to stack not being used
-    while(working_ptr > _stack)
+    while(((DATA_PTR_TYPE *) working_ptr) > &_stack)
     {
         // Decrement first, so we don't overwrite 'working_ptr', what the SP was pointing at.
-        working_ptr--;
-        *working_ptr = 0xAAAA;
+        working_ptr -= 2;
+        *((DATA_PTR_TYPE *) working_ptr) = 0xAAAA;
     }
 
     return 1;
